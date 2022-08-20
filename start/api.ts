@@ -22,7 +22,7 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
     Route.group(() => {
-        Route.get('all', 'Api/CountriesController.index').as('index')
+        Route.get('', 'Api/CountriesController.index').as('index')
 
         Route.get(':code_iso', 'Api/CountriesController.show').as('show')
     }).prefix('countries').as('countries')
