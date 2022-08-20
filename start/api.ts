@@ -20,6 +20,8 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('api/', async ({ view }) => {
-  return view.render('welcome')
-})
+Route.group(() => {
+    Route.group(() => {
+        Route.get('all', 'Api/CountriesController.index').as('index')
+    }).prefix('countries').as('countries')
+}).prefix('api').as('api')
