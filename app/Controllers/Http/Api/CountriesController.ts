@@ -18,7 +18,7 @@ export default class CountriesController
         }
         catch (e)
         {
-            return 'Not found'
+            return 'Not found country'
         }
     }
 }
