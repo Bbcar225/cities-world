@@ -8,6 +8,6 @@ Route.group(() => {
 
         Route.get(':code_iso/cities', 'Api/CountriesController.cities_index').as('cities.index')
 
-        Route
+        Route.get(':code_iso/cities/:name_city', 'Api/CountriesController.cities_show').as('cities.show')
     }).prefix('countries').as('countries')
 }).prefix('api').as('api')
