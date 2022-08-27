@@ -47,12 +47,31 @@ export default class CountriesController {
 
   public async store({ request }: HttpContextContract)
   {
-    const data = await request.validate(StoreCountrieValidator)
+    await request.validate(StoreCountrieValidator)
 
     return await Countrie.create({
       phone_code: request.input('phone_code'),
       code_iso  : request.input('code_iso').toUpperCase(),
       name      : request.input('name')
     })
+  }
+
+  public async update({ params, request }: HttpContextContract)
+  {
+    try {
+      const country = await Countrie.query().where('code_iso', params.code_iso).firstOrFail()
+
+      if (request.input('cities') == 1)
+      {
+        await country.related('cities').query().where('countrie_id', country.id).delete()
+      }
+
+      await country.delete()
+
+      return true
+    }
+    catch (e) {
+      return `Not found country for ${params.code_iso}`
+    }
   }
 }

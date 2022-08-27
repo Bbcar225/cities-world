@@ -11,6 +11,8 @@ Route.group(() => {
     Route.get(':code_iso/cities/:name_city', 'Api/CountriesController.cities_show').as('cities.show')
 
     Route.post('store', 'Api/CountriesController.store').as('store').middleware('auth:api')
+
+    Route.delete('update/:code_iso', 'Api/CountriesController.update').as('update').middleware('auth:api')
   }).prefix('countries').as('countries')
 
   Route.group(() => {
