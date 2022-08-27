@@ -1,6 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Countrie from 'App/Models/Countrie'
 import StoreCountrieValidator from 'App/Validators/StoreCountrieValidator'
+import UpdateCountrieValidator from 'App/Validators/UpdateCountrieValidator'
 
 export default class CountriesController {
   protected exposed_data_country = ['name', 'phone_code', 'code_iso']
@@ -21,7 +22,7 @@ export default class CountriesController {
 
   public async cities_index({ params }: HttpContextContract) {
     try {
-      const country = await Countrie.query().where('code_iso', params.code_iso).firstOrFail()
+      const country = await this.get_country(params.code_iso)
 
       return country.related('cities').query().select(this.exposed_data_city)
     }
@@ -34,7 +35,7 @@ export default class CountriesController {
     params.name_city = decodeURIComponent(params.name_city)
 
     try {
-      const country = await Countrie.query().where('code_iso', params.code_iso).firstOrFail()
+      const country = await this.get_country(params.code_iso)
 
       const city = await country.related('cities').query().where('name', 'LIKE', '%'+params.name_city+'%').select(this.exposed_data_city).firstOrFail()
 
@@ -58,8 +59,27 @@ export default class CountriesController {
 
   public async update({ params, request }: HttpContextContract)
   {
+    await request.validate(UpdateCountrieValidator)
+
     try {
-      const country = await Countrie.query().where('code_iso', params.code_iso).firstOrFail()
+      const country = await this.get_country(params.code_iso)
+
+      return await country.merge({
+        phone_code: request.input('phone_code'),
+        code_iso  : request.input('code_iso'),
+        name      : request.input('name')
+      }).save()
+    }
+    catch (e)
+    {
+      return `Not found country for ${params.code_iso}`
+    }
+  }
+
+  public async destroy({ params, request }: HttpContextContract)
+  {
+    try {
+      const country = await this.get_country(params.code_iso)
 
       if (request.input('cities') == 1)
       {
@@ -70,8 +90,14 @@ export default class CountriesController {
 
       return true
     }
-    catch (e) {
+    catch (e)
+    {
       return `Not found country for ${params.code_iso}`
     }
+  }
+
+  public get_country(code_iso: string)
+  {
+    return Countrie.query().where('code_iso', code_iso).firstOrFail()
   }
 }

@@ -12,7 +12,9 @@ Route.group(() => {
 
     Route.post('store', 'Api/CountriesController.store').as('store').middleware('auth:api')
 
-    Route.delete('update/:code_iso', 'Api/CountriesController.update').as('update').middleware('auth:api')
+    Route.patch('update/:code_iso', 'Api/CountriesController.update').as('update').middleware('auth:api')
+
+    Route.delete('destroy/:code_iso', 'Api/CountriesController.destroy').as('destroy').middleware('auth:api')
   }).prefix('countries').as('countries')
 
   Route.group(() => {
