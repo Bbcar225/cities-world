@@ -13,7 +13,7 @@ export default class Countrie extends BaseModel {
   public code_iso: string
 
   @column()
-  protected name: string
+  public name: string
 
   @column()
   public access: string

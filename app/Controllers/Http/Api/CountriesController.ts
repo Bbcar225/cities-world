@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Countrie from 'App/Models/Countrie'
+import StoreCountrieValidator from 'App/Validators/StoreCountrieValidator'
 
 export default class CountriesController {
   protected exposed_data_country = ['name', 'phone_code', 'code_iso']
@@ -42,5 +43,16 @@ export default class CountriesController {
     catch (e) {
       return `Not found city with ${params.name_city} for the country ${params.code_iso}`
     }
+  }
+
+  public async store({ request }: HttpContextContract)
+  {
+    const data = await request.validate(StoreCountrieValidator)
+
+    return await Countrie.create({
+      phone_code: request.input('phone_code'),
+      code_iso  : request.input('code_iso').toUpperCase(),
+      name      : request.input('name')
+    })
   }
 }
