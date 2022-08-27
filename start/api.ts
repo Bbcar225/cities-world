@@ -10,4 +10,7 @@ Route.group(() => {
 
         Route.get(':code_iso/cities/:name_city', 'Api/CountriesController.cities_show').as('cities.show')
     }).prefix('countries').as('countries')
+  Route.group(() => {
+    Route.post('login', 'Api/AuthentificationsController.login').as('login')
+  }).as('auth')
 }).prefix('api').as('api')
