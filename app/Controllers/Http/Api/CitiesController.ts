@@ -18,13 +18,13 @@ export default class CitiesController
 
     try
     {
-      const city = await this.get_city(params.name)
+      const city = await this.get_city(params)
 
       return city.merge(this.data_store_form_request(request)).save()
     }
     catch(error)
     {
-      return `Not found city for ${params.name}`
+      return `Not found city for ${params.city_name}`
     }
   }
 
@@ -32,7 +32,7 @@ export default class CitiesController
   {
     try
     {
-      const city = await this.get_city(params.name)
+      const city = await this.get_city(params)
 
       await city.delete()
 
@@ -40,13 +40,13 @@ export default class CitiesController
     }
     catch (error)
     {
-      return `Not found city for ${params.name}`
+      return `Not found city for ${params.city_name}`
     }
   }
 
-  private get_city(name: string)
+  private get_city(params: any)
   {
-    return Citie.query().where('name', name).firstOrFail()
+    return Citie.query().where('name', params.city_name).where('countrie_id', params.country_id).firstOrFail()
   }
 
   private data_store_form_request(request: any) {

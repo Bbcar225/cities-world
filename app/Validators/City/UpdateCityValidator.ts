@@ -5,8 +5,7 @@ export default class UpdateCityValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public refs = schema.refs({
-    country_id: this.ctx.request.input('country_id'),
-    params_nam: this.ctx.params.name
+    country_id: this.ctx.params.country_id,
   })
 
   /*
@@ -36,7 +35,7 @@ export default class UpdateCityValidator {
     name: schema.string({trim: true}, [
       rules.minLength(2),
       rules.maxLength(255),
-      rules.unique({table: 'cities', column: 'name', where: {countrie_id: this.refs.country_id}, whereNot: {name: this.refs.params_nam}})
+      rules.unique({table: 'cities', column: 'name', where: {countrie_id: this.refs.country_id}})
     ]),
 
     latitude: schema.number.nullableAndOptional(),

@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import Countrie from './Countrie'
 
 export default class Citie extends BaseModel {
   @column({ isPrimary: true })
@@ -22,6 +23,11 @@ export default class Citie extends BaseModel {
 
   @column()
   public population?: number
+
+  @belongsTo(() => Countrie, {
+    foreignKey: 'countrie_id',
+  })
+  public country: BelongsTo<typeof Countrie>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
