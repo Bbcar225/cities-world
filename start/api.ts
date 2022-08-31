@@ -31,8 +31,10 @@ Route.group(() => {
       // Add new city of country
       Route.post('store', 'Api/CitiesController.store').as('store')
 
+      // Update city of country
       Route.patch('update/:country_id/:city_name/', 'Api/CitiesController.update').as('update')
 
+      // Destroy city of country
       Route.delete('destroy/:country_id/:city_name/', 'Api/CitiesController.destroy').as('destroy')
     }).middleware('auth:api')
   }).prefix('cities').as('cities')
