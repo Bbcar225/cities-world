@@ -32,6 +32,8 @@ Route.group(() => {
       Route.post('store', 'Api/CitiesController.store').as('store')
 
       Route.patch('update/:name', 'Api/CitiesController.update').as('update')
+
+      Route.delete('destroy/:name', 'Api/CitiesController.destroy').as('destroy')
     }).middleware('auth:api')
   }).prefix('cities').as('cities')
 

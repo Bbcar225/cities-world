@@ -28,6 +28,22 @@ export default class CitiesController
     }
   }
 
+  public async destroy({ params }: HttpContextContract)
+  {
+    try
+    {
+      const city = await this.get_city(params.name)
+
+      await city.delete()
+
+      return true
+    }
+    catch (error)
+    {
+      return `Not found city for ${params.name}`
+    }
+  }
+
   private get_city(name: string)
   {
     return Citie.query().where('name', name).firstOrFail()
