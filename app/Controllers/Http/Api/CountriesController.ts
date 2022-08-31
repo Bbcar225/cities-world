@@ -66,7 +66,7 @@ export default class CountriesController {
 
       return await country.merge({
         phone_code: request.input('phone_code'),
-        code_iso  : request.input('code_iso'),
+        code_iso  : request.input('code_iso').toUpperCase(),
         name      : request.input('name')
       }).save()
     }
@@ -96,7 +96,7 @@ export default class CountriesController {
     }
   }
 
-  public get_country(code_iso: string)
+  protected get_country(code_iso: string)
   {
     return Countrie.query().where('code_iso', code_iso).firstOrFail()
   }
