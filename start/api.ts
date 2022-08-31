@@ -31,6 +31,8 @@ Route.group(() => {
       // Add new city of country
       Route.post('store', 'Api/CitiesController.store').as('store')
 
+      Route.post('upload/', 'Api/CitiesController.upload').as('upload')
+
       // Update city of country
       Route.patch('update/:country_id/:city_name/', 'Api/CitiesController.update').as('update')
 

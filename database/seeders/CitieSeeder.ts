@@ -15,10 +15,10 @@ export default class extends BaseSeeder {
       cities_ci.forEach(async (city: { city: any; lat: any; lng: any; population: any }) => {
         cities_ci_clean.push({
           countrie_id: ci.id,
-          name: city.city,
-          latitude: city.lat,
-          longitude: city.lng,
-          population: city.population || null
+          name       : city.city,
+          latitude   : city.lat,
+          longitude  : city.lng,
+          population : city.population || null
         })
       })
 
