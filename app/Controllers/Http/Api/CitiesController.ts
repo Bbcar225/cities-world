@@ -100,6 +100,8 @@ export default class CitiesController
         return fa < fb ? -1 : (fa > fb ? 1 : 0)
       }))
 
+      await Drive.delete(file_name)
+
       return country.related('cities').query()
     }
     catch(error)
